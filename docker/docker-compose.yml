@@ -1,0 +1,22 @@
+version: '2'
+
+volumes:
+  pa_mongo_db: {}
+  pa_mongo_dump: {}
+
+services:
+  db:
+    image: mongo
+    container_name: papad_api_db
+    volumes:
+      - pa_mongo_db:/data/db
+      - pa_mongo_dump:/dump
+
+  app:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    container_name: papad_api_app
+    links:
+      - db
+

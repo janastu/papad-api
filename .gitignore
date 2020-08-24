@@ -1,0 +1,4 @@
+config.json
+docker/docker-compose.override.yml
+*.swp
+*.py[co]

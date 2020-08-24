@@ -85,22 +85,23 @@ def put_channel(mongodb, entity, id):
 
     if obj:
         updated_obj = request.json
-        if 'station_name' in updated_obj:
-            station = mongodb['station'].find_one({ 'station_name': updated_obj['station_name'] })
-        elif 'station_id' in updated_obj:
-            if len(updated_obj['station_id']) == 24:
-                station = mongodb['station'].find_one({'_id': ObjectId(updated_obj['station_id'])})
-            else:
-                station = mongodb['station'].find_one({'_id': updated_obj['station_id']})
-        else:
-            raise_error('Station not specified')
-        obj['station_id'] = station['_id']
+        if entity == 'recordings':
+            station = None
+            if 'station_name' in updated_obj:
+                station = mongodb['station'].find_one({ 'station_name': updated_obj['station_name'] })
+            elif 'station_id' in updated_obj:
+                if len(updated_obj['station_id']) == 24:
+                    station = mongodb['station'].find_one({'_id': ObjectId(updated_obj['station_id'])})
+                else:
+                    station = mongodb['station'].find_one({'_id': updated_obj['station_id']})
+            if station:
+                obj['station_id'] = station['_id']
         obj.update(updated_obj)
         mongodb[ENTITY_COLLECTION_MAP[entity]].update_one(
                 { '_id': obj['_id'] },
                 { "$set": obj }
                 )
-        return entity
+        return obj
     else:
         raise_error('{} not found'.format(ENTITY_COLLECTION_MAP[entity]), code=404)
 

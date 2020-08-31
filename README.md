@@ -27,3 +27,9 @@ $ docker-compose build
 $ docker-compose up -d
 
 ```
+
+# Query
+
+The list endpoints /channels/, /recordings/ and others support query parameters of the type field_name=field_value. 
+The also support mongo query values such as /channels/?station_name={"$regex": ".*somestring.*"} , to search for 
+'somestring' within the field `station_name`

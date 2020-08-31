@@ -36,7 +36,10 @@ def check_path(entity):
 def channels(mongodb, entity):
     check_path(entity)
     response.content_type = 'application/json'
-    return dumps(mongodb[ENTITY_COLLECTION_MAP[entity]].find())
+    for k in request.query:
+        if request.query[k].startswith('{'):
+            request.query[k] = json.loads(request.query[k])
+    return dumps(mongodb[ENTITY_COLLECTION_MAP[entity]].find(request.query))
 
 @enable_cors
 @app.route('/<entity>/<id>')

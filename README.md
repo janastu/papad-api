@@ -8,6 +8,12 @@ Install in a virtualenv or use with sudo to install system-wide
 
 `$ pip install -r requirements.txt`
 
+For enabling avahi service, copy the file `avahi/papad.service` to /etc/avahi/services. You can run the command
+
+`$ sudo cp avahi/papad.service /etc/avahi/services/`
+
+To copy and enable service discovery through zero-conf.
+
 # Configure
 
 Copy config.json.example to config.json and edit the values. Put in appropriate values for the mongodb host and name of the database as well as the server host and port to run on.

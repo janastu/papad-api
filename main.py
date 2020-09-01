@@ -17,7 +17,8 @@ app.install(plugin)
 
 ENTITY_COLLECTION_MAP = {
         'channels': 'station',
-        'recordings': 'recording'
+        'recordings': 'recording',
+        'fragments': 'fragment'
         }
 
 def raise_error(message, code=400):

@@ -22,3 +22,10 @@ for field in ['audio_url', 'tags', 'img_tags', 'upload_date', 'station_id']:
     except Error:
         print("Error creating index on {}".format(field))
         pass
+
+for field in ['type', 'target.source', 'target.selector.type', 'target.selector.value', 'target.selector.start', 'target.selector.end', 'body.purpose', 'body.type', 'body.value']:
+    try:
+        db.fragment.create_index([(field, pymongo.ASCENDING)])
+    except Error:
+        print("Error creating index on {}".format(field))
+        pass

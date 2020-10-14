@@ -109,6 +109,21 @@ def put_channel(mongodb, entity, id):
     else:
         raise_error('{} not found'.format(ENTITY_COLLECTION_MAP[entity]), code=404)
 
+@enable_cors
+@app.route('/<entity>/<id>', method='DELETE')
+def put_channel(mongodb, entity, id):
+    check_path(entity)
+    if len(id) == 24:
+        obj = mongodb[ENTITY_COLLECTION_MAP[entity]].find_one({'_id': ObjectId(id)})
+    else:
+        obj = mongodb[ENTITY_COLLECTION_MAP[entity]].find_one({'_id': id})
+
+    if obj:
+        mongodb[ENTITY_COLLECTION_MAP[entity]].delete_one({ '_id': obj['_id'] })
+        return { "message": "Successfully deleted object" }
+    else:
+        raise_error('{} not found'.format(ENTITY_COLLECTION_MAP[entity]), code=404)
+
 app.install(CorsPlugin(origins=['*']))
 
 if __name__ == '__main__':
